@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, HashRouter } from "react-router-dom";
 import { Container } from "./styles";
 import ScrollAnimation from "react-animate-on-scroll";
 import Illustration from "../../assets/illustration.svg";
@@ -26,24 +26,26 @@ function TypingEffect() {
       const currentFullRole = roles[roleIndex];
       if (isDeleting) {
         setCurrentRole(currentFullRole.substring(0, charIndex - 1));
-        setCharIndex((prevCharIndex) => prevCharIndex - 1);
+        setCharIndex(charIndex - 1);
+        if (charIndex === 0) {
+          setIsDeleting(false);
+          setRoleIndex((roleIndex + 1) % roles.length);
+        }
       } else {
         setCurrentRole(currentFullRole.substring(0, charIndex + 1));
-        setCharIndex((prevCharIndex) => prevCharIndex + 1);
-      }
-
-      if (!isDeleting && charIndex === currentFullRole.length) {
-        // Additional logic here
+        setCharIndex(charIndex + 1);
+        if (charIndex === currentFullRole.length) {
+          setIsDeleting(true);
+          setTimeout(() => {}, delayBetweenRoles);
+        }
       }
     };
 
-    const typingInterval = setInterval(handleTyping, deletingSpeed);
+    const typingInterval = setInterval(handleTyping, isDeleting ? deletingSpeed : typingSpeed);
     return () => clearInterval(typingInterval);
   }, [charIndex, isDeleting, roleIndex]);
 
-  return (
-    <div>{currentRole}</div>
-  );
+  return <div>{currentRole}</div>;
 }
 
 const Hero = () => {
@@ -63,9 +65,9 @@ const Hero = () => {
           <p className="small-resume">University of Engineering & Management</p>
         </ScrollAnimation>
         <ScrollAnimation animateIn="fadeInUp" delay={0.8 * 1000}>
-          <BrowserRouter>
+          <HashRouter>
             <NavHashLink smooth to="#contact" className="button">Contact</NavHashLink>
-          </BrowserRouter>
+          </HashRouter>
         </ScrollAnimation>
         <ScrollAnimation animateIn="fadeInUp" delay={1 * 1000}>
           <div className="social-media">
@@ -84,7 +86,7 @@ const Hero = () => {
               <img src={githubIcon} alt="GitHub" />
             </a>
             <a
-              href="https://api.whatsapp.com/send/?phone=%2B919630576848&text=Hello+Vinayak"
+              href="https://api.whatsapp.com/send/?phone=%2B919630576848&text=Hello+Sudip"
               target="_blank"
               rel="noreferrer"
             >
