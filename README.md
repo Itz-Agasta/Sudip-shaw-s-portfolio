@@ -5,8 +5,6 @@ This is Sudip shaw'spersonal portfolio website built with React, TypeScript, and
 
 - [Installation](#installation)
 - [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Dependencies](#dependencies)
 
 
 
@@ -14,11 +12,11 @@ This is Sudip shaw'spersonal portfolio website built with React, TypeScript, and
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/your-username/your-repo.git
+    git clone https://github.com/your-username/Sudip_shaw_portfolio.git
     ```
 2. Navigate to the project directory:
     ```sh
-    cd your-repo
+    cd Sudip_shaw_portfolio
     ```
 3. Install the dependencies:
     ```sh
