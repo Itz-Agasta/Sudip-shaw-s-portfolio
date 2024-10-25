@@ -26,29 +26,24 @@ function TypingEffect() {
       const currentFullRole = roles[roleIndex];
       if (isDeleting) {
         setCurrentRole(currentFullRole.substring(0, charIndex - 1));
-        setCharIndex(charIndex - 1);
+        setCharIndex((prevCharIndex) => prevCharIndex - 1);
       } else {
         setCurrentRole(currentFullRole.substring(0, charIndex + 1));
-        setCharIndex(charIndex + 1);
+        setCharIndex((prevCharIndex) => prevCharIndex + 1);
       }
 
       if (!isDeleting && charIndex === currentFullRole.length) {
-        setTimeout(() => setIsDeleting(true), delayBetweenRoles);
-      } else if (isDeleting && charIndex === 0) {
-        setIsDeleting(false);
-        setRoleIndex((prevIndex) => (prevIndex + 1) % roles.length);
+        // Additional logic here
       }
     };
 
-    const typingTimeout = setTimeout(
-      handleTyping,
-      isDeleting ? deletingSpeed : typingSpeed
-    );
-
-    return () => clearTimeout(typingTimeout);
+    const typingInterval = setInterval(handleTyping, deletingSpeed);
+    return () => clearInterval(typingInterval);
   }, [charIndex, isDeleting, roleIndex]);
 
-  return <h3 style={{ minHeight: "1.5em" }}>{currentRole}</h3>;
+  return (
+    <div>{currentRole}</div>
+  );
 }
 
 const Hero = () => {
